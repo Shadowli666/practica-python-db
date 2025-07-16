@@ -28,12 +28,13 @@ services:
       - mysql-data:/var/lib/mysql
     environment:
       # Define las credenciales para la base de datos.
-      # ¡IMPORTANTE! Puedes cambiar estos valores.
       MYSQL_ROOT_PASSWORD: 'rootpassword'
       MYSQL_DATABASE: 'python_practica_db'
-    ports:
-      # Puedes descomentar esta línea si necesitas acceder a la BD desde tu máquina local.
-      # - 3306:3306
+    # La sección de puertos está comentada porque la comunicación entre 'app' y 'db'
+    # ocurre internamente en la red de Docker. No necesitas exponer el puerto
+    # a menos que quieras conectarte desde fuera del Codespace.
+    # ports:
+    #   - "3306:3306" # Si la descomentas, asegúrate de que tenga el guion.
 
 # Define el volumen nombrado para la persistencia de datos.
 volumes:
