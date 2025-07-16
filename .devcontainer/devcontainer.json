@@ -1,0 +1,47 @@
+{
+  "name": "Python & Databases (MySQL, SQLite)",
+  // Usa el archivo docker-compose para orquestar los contenedores.
+  "dockerComposeFile": "docker-compose.yml",
+  // Especifica que el servicio 'app' es nuestro entorno de desarrollo principal.
+  "service": "app",
+  // La carpeta de trabajo dentro del contenedor.
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      // Lista de extensiones de VS Code que se instalarán automáticamente.
+      "extensions": [
+        "ms-python.python", // Soporte para Python
+        "mtxr.sqltools", // Herramientas de Base de Datos
+        "mtxr.sqltools-driver-sqlite", // Conector de SQLite para SQLTools
+        "mtxr.sqltools-driver-mysql" // Conector de MySQL para SQLTools
+      ],
+      // Configuraciones predefinidas para VS Code.
+      "settings": {
+        // Establece el intérprete de Python por defecto.
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        // Pre-configura las conexiones de SQLTools para que no tengas que hacerlo manualmente.
+        "sqltools.connections": [
+          {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Práctica SQLite",
+            "database": "${workspaceFolder}/mi_tienda.db"
+          },
+          {
+            "previewLimit": 50,
+            "driver": "MySQL",
+            "name": "Práctica MySQL (Codespace)",
+            "server": "db", // 'db' es el nombre del servicio en docker-compose.yml
+            "port": 3306,
+            "database": "python_practica_db",
+            "username": "root",
+            "password": "rootpassword" // La misma contraseña del docker-compose.yml
+          }
+        ]
+      }
+    }
+  },
+  // Comando que se ejecuta después de que el contenedor se haya creado.
+  // Instala automáticamente las dependencias de Python.
+  "postCreateCommand": "pip install -r requirements.txt"
+}

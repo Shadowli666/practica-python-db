@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Este es tu contenedor de desarrollo principal.
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      # Monta el código fuente de tu proyecto en el workspace del contenedor.
+      - ..:/workspace:cached
+
+    # Sobrescribe el comando por defecto para mantener el contenedor en ejecución.
+    command: sleep infinity
+
+    # Vincula este servicio a la base de datos.
+    # Esto asegura que el servicio 'db' se inicie antes que 'app'.
+    depends_on:
+      - db
+
+  # Este es el contenedor del servicio de la base de datos MySQL.
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    volumes:
+      # Crea un volumen para que los datos de MySQL persistan entre reinicios.
+      - mysql-data:/var/lib/mysql
+    environment:
+      # Define las credenciales para la base de datos.
+      # ¡IMPORTANTE! Puedes cambiar estos valores.
+      MYSQL_ROOT_PASSWORD: 'rootpassword'
+      MYSQL_DATABASE: 'python_practica_db'
+    ports:
+      # Puedes descomentar esta línea si necesitas acceder a la BD desde tu máquina local.
+      # - 3306:3306
+
+# Define el volumen nombrado para la persistencia de datos.
+volumes:
+  mysql-data:
