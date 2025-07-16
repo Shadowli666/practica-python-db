@@ -6,6 +6,11 @@
   "service": "app",
   // La carpeta de trabajo dentro del contenedor.
   "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
   "customizations": {
     "vscode": {
       // Lista de extensiones de VS Code que se instalarán automáticamente.
